@@ -1,6 +1,5 @@
 package model;
 
-import model.HashNode;
 import java.util.ArrayList;
 import java.util.Collections;
 
