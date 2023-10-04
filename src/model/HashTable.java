@@ -1,15 +1,11 @@
 package model;
 
-import model.HashNode;
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class HashTable<K,V> implements IHashTable<K,V> {
 
     private ArrayList<HashNode<K,V>> table;
-
-
-
 
     public HashTable() {
         this.table = new ArrayList<>(Collections.nCopies(8, null));
@@ -67,7 +63,7 @@ public class HashTable<K,V> implements IHashTable<K,V> {
         table.set(index, delete(table.get(index), key));
     }
 
-    private Nod o<K, V> delete(HashNode<K, V> node, K key) {
+    private HashNode<K, V> delete(HashNode<K, V> node, K key) {
         if (node == null) {
             return null;
         }
@@ -93,5 +89,6 @@ public class HashTable<K,V> implements IHashTable<K,V> {
     public void setTable(ArrayList<HashNode<K, V>> table) {
         this.table = table;
     }
+
 
 }
