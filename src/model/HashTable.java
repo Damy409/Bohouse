@@ -8,27 +8,34 @@ public class HashTable<K,V> implements IHashTable<K,V> {
     private ArrayList<HashNode<K,V>> table;
 
     public HashTable() {
-        this.table = new ArrayList<>(Collections.nCopies(8, null));
+        this.table = new ArrayList<>(Collections.nCopies(12, null));
     }
 
-    public int hash(K key) {
+    public int hash(Task task) {
 
-        double frac = (Math.sqrt(5) -1)/2;
+        int key1 = 0;
 
-        double pruba = Math.abs(key.hashCode());
 
-        int key1 = (int) Math.floor(table.size() *  (( (Math.abs(key.hashCode())) * (Math.sqrt(5) -1)/2) %1));
+        if (task.getPriority() == PriorityLevel.HIGH)
+        {
+            key1 = 0;
+        }
+        else
+        {
+            key1 = 1;
+        }
+
         return key1;
     }
 
 
     @Override
-    public void insert(K key, V value) {
+    public void insert(K key, V value, Task task) {
         if (key == null) {
             throw new IllegalArgumentException("La clave no puede ser nula.");
         }
 
-        int index = hash(key);
+        int index = hash(task);
         HashNode<K, V> nodeToAdd = new HashNode<>(key, value);
 
         if (table.get(index) == null) {
@@ -42,38 +49,41 @@ public class HashTable<K,V> implements IHashTable<K,V> {
 
 
     @Override
-    public V search(K key) {
-        int index = hash(key);
-        return search(table.get(index), key);
+    public V search(K key, Task task) {
+        int index = hash(task);
+        return search(table.get(index), key, task);
     }
 
-    private V search(HashNode<K, V> node, K key) {
+    private V search(HashNode<K, V> node, K key, Task task) {
+        
         if (node == null) {
             return null;
         }
         if (node.getKey().equals(key)) {
             return node.getValue();
         }
-        return search(key);
+        return search(key, task);
     }
 
     @Override
-    public void delete(K key) {
-        int index = hash(key);
+    public void delete(K key, Task task) {
+        int index = hash(task);
         table.set(index, delete(table.get(index), key));
     }
 
+    // Método privado para eliminar en una lista enlazada de nodos HashNode
+
     private HashNode<K, V> delete(HashNode<K, V> node, K key) {
         if (node == null) {
-            return null;
+            return null; // Si no hay nodo en esta posición, no hay nada que eliminar
         }
 
         if (node.getKey().equals(key)) {
-            // Encontramos la clave, la eliminamos
+            // Si la clave coincide, se elimina este nodo y se devuelve el siguiente
             return node.getNext();
         }
 
-        node.setNext(delete(node.getNext(), key));
+        node.setNext(delete(node.getNext(), key)); // Eliminación recursiva en el siguiente nodo de la lista
         return node;
     }
 
@@ -81,6 +91,8 @@ public class HashTable<K,V> implements IHashTable<K,V> {
     public String print() {
         return null;
     }
+
+    // Métodos getter y setter para acceder a la tabla desde fuera de la clase
 
     public ArrayList<HashNode<K, V>> getTable() {
         return table;

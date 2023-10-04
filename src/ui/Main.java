@@ -132,7 +132,7 @@ public class Main {
         System.out.println("    OPTION: ");
 
         int priority = lector.nextInt();
-        PriorityLevel levelPriority;
+        PriorityLevel levelPriority = PriorityLevel.HIGH;
 
         while (priority < 1 || priority > 2) {
 
@@ -153,9 +153,11 @@ public class Main {
                 break;
         }
 
+        System.out.println(bohouseSystem.createTask(title, description, date, levelPriority));
 
 
     }
+
 }
 
 
