@@ -74,6 +74,8 @@ public class Main {
         {
             case 1:
                 System.out.println("Caso uno");
+                createTask();
+                System.out.println(bohouseSystem.printTasks());
                 repeatMenu();
                 break;
             case 2:
@@ -137,6 +139,8 @@ public class Main {
         System.out.println("-----------------------------------------------------");
         System.out.println("Please, enter de data od the task/reminder you want  ");
         System.out.println("to create");
+
+        lector.nextLine();
 
         System.out.println("TITLE: ");
         String title = lector.nextLine();

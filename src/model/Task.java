@@ -108,8 +108,7 @@ public class Task {
     public String toString(){
 
         return "Title: " +title+ " Description: " +description+ " Date: " +date+ " Priority: " +priority;
-    }
-     
+    }    
 
 
     

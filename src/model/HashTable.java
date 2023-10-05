@@ -18,8 +18,8 @@ public class HashTable<K,V> implements IHashTable<K,V> {
     /**
      * Constructs a new HashTable with an initial capacity of 12.
      */
-    public HashTable() {
-        this.table = new ArrayList<>(Collections.nCopies(12, null));
+    public HashTable(int initialSize) {
+        this.table = new ArrayList<>(Collections.nCopies(initialSize, null));
     }
 
     /**
@@ -28,9 +28,9 @@ public class HashTable<K,V> implements IHashTable<K,V> {
      * @param task The task used for generating the hash index.
      * @return The index in the hash table.
      */
-    public int hash(Task task) {
+    public int hash(K key) {
 
-        int key1 = 0;
+        /*int key1 = 0;
 
 
         if (task.getPriority() == PriorityLevel.HIGH)
@@ -43,6 +43,9 @@ public class HashTable<K,V> implements IHashTable<K,V> {
         }
 
         return key1;
+        */
+
+        return key.hashCode() % table.size();
     }
 
 
@@ -52,7 +55,7 @@ public class HashTable<K,V> implements IHashTable<K,V> {
             throw new IllegalArgumentException("La clave no puede ser nula.");
         }
 
-        int index = hash(task);
+        int index = hash(key);
         HashNode<K, V> nodeToAdd = new HashNode<>(key, value);
 
         if (table.get(index) == null) {
@@ -67,7 +70,7 @@ public class HashTable<K,V> implements IHashTable<K,V> {
 
     @Override
     public V search(K key, Task task) {
-        int index = hash(task);
+        int index = hash(key);
         return search(table.get(index), key, task);
     }
 
@@ -84,7 +87,7 @@ public class HashTable<K,V> implements IHashTable<K,V> {
 
     @Override
     public void delete(K key, Task task) {
-        int index = hash(task);
+        int index = hash(key);
         table.set(index, delete(table.get(index), key));
     }
 
@@ -127,6 +130,24 @@ public class HashTable<K,V> implements IHashTable<K,V> {
      */
     public void setTable(ArrayList<HashNode<K, V>> table) {
         this.table = table;
+    }
+
+    public V get(K key) {
+        int index = hash(key); // Calcular el índice hash para la clave
+
+        // Obtener el nodo en ese índice
+        HashNode<K, V> currentNode = table.get(index);
+
+        // Buscar la clave en la lista de nodos enlazados en ese índice
+        while (currentNode != null) {
+            if (currentNode.getKey().equals(key)) {
+                return currentNode.getValue(); // Se encontró la clave, devolver el valor asociado
+            }
+            currentNode = currentNode.getNext(); // Avanzar al siguiente nodo en caso de colisiones
+        }
+
+        // Si no se encontró la clave en la lista de nodos enlazados
+        return null;
     }
 
 

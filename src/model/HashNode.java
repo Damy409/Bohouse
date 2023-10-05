@@ -59,7 +59,7 @@ public class HashNode<K,V> {
      * @return The key associated with this node.
      */
     public Object getKey() {
-        return null;
+        return key;
     }
 
     /**
@@ -68,7 +68,7 @@ public class HashNode<K,V> {
      * @return The value associated with this node.
      */
     public V getValue() {
-        return null;
+        return value;
     }
 
     /**
@@ -77,7 +77,7 @@ public class HashNode<K,V> {
      * @return The next HashNode in the linked list.
      */
     public HashNode<K, V> getNext() {
-        return null;
+        return next;
     }
 
     
