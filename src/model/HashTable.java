@@ -3,14 +3,31 @@ package model;
 import java.util.ArrayList;
 import java.util.Collections;
 
+
+/**
+ * The HashTable class represents a hash table data structure that stores key-value pairs.
+ * It uses a simple hashing function for indexing and handles collisions with linked lists.
+ *
+ * @param <K> The type of keys to be stored in the hash table.
+ * @param <V> The type of values associated with the keys in the hash table.
+ */
 public class HashTable<K,V> implements IHashTable<K,V> {
 
     private ArrayList<HashNode<K,V>> table;
 
+    /**
+     * Constructs a new HashTable with an initial capacity of 12.
+     */
     public HashTable() {
         this.table = new ArrayList<>(Collections.nCopies(12, null));
     }
 
+    /**
+     * Hashes a task to determine the index in the hash table.
+     *
+     * @param task The task used for generating the hash index.
+     * @return The index in the hash table.
+     */
     public int hash(Task task) {
 
         int key1 = 0;
@@ -94,10 +111,20 @@ public class HashTable<K,V> implements IHashTable<K,V> {
 
     // Métodos getter y setter para acceder a la tabla desde fuera de la clase
 
+    /**
+     * Gets the current state of the hash table.
+     *
+     * @return An ArrayList containing the hash table's nodes.
+     */
     public ArrayList<HashNode<K, V>> getTable() {
         return table;
     }
 
+    /**
+     * Sets the hash table to a new ArrayList of HashNodes.
+     *
+     * @param table The new ArrayList to set as the hash table.
+     */
     public void setTable(ArrayList<HashNode<K, V>> table) {
         this.table = table;
     }

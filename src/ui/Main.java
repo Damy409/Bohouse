@@ -4,16 +4,29 @@ import java.util.Scanner;
 import model.Controller;
 import model.PriorityLevel;
 
+
+/**
+ * The Main class represents the main entry point for the BOHOUSE tasks and reminders system.
+ * It provides a menu for users to perform various actions related to tasks and reminders.
+ */
 public class Main {
 
     private Scanner lector;
     private Controller bohouseSystem;
 
+    /**
+     * Constructs a new Main object, initializing the scanner and the controller for the system.
+     */
     public Main() {
         lector = new Scanner(System.in);
         this.bohouseSystem = new Controller();
     }
 
+    /**
+     * The main method to start the BOHOUSE tasks and reminders system.
+     *
+     * @param args The command-line arguments (not used in this application).
+     */
     public static void main(String[] args) {
 
         Main objBohouseSystem = new Main();
@@ -23,6 +36,9 @@ public class Main {
 
     }
 
+    /**
+     * Displays the main menu and handles user input for various actions.
+     */
     public void menu() {
 
         int option = 0;
@@ -78,6 +94,9 @@ public class Main {
 
     }
     
+    /**
+     * Displays a submenu and handles user input for continuing or exiting the program.
+     */
     public void repeatMenu() {
 
         int optionRepeat = 0;
@@ -108,6 +127,9 @@ public class Main {
 
     }
 
+    /**
+     * Creates a new task/reminder with user-specified data.
+     */
     public void createTask() {
 
         System.out.println("-----------------------------------------------------");
