@@ -4,16 +4,29 @@ import java.util.Scanner;
 import model.Controller;
 import model.PriorityLevel;
 
+
+/**
+ * The Main class represents the main entry point for the BOHOUSE tasks and reminders system.
+ * It provides a menu for users to perform various actions related to tasks and reminders.
+ */
 public class Main {
 
     private Scanner lector;
     private Controller bohouseSystem;
 
+    /**
+     * Constructs a new Main object, initializing the scanner and the controller for the system.
+     */
     public Main() {
         lector = new Scanner(System.in);
         this.bohouseSystem = new Controller();
     }
 
+    /**
+     * The main method to start the BOHOUSE tasks and reminders system.
+     *
+     * @param args The command-line arguments (not used in this application).
+     */
     public static void main(String[] args) {
 
         Main objBohouseSystem = new Main();
@@ -23,6 +36,9 @@ public class Main {
 
     }
 
+    /**
+     * Displays the main menu and handles user input for various actions.
+     */
     public void menu() {
 
         int option = 0;
@@ -58,6 +74,8 @@ public class Main {
         {
             case 1:
                 System.out.println("Caso uno");
+                createTask();
+                System.out.println(bohouseSystem.printTasks());
                 repeatMenu();
                 break;
             case 2:
@@ -78,6 +96,9 @@ public class Main {
 
     }
     
+    /**
+     * Displays a submenu and handles user input for continuing or exiting the program.
+     */
     public void repeatMenu() {
 
         int optionRepeat = 0;
@@ -108,6 +129,9 @@ public class Main {
 
     }
 
+    /**
+     * Creates a new task/reminder with user-specified data.
+     */
     public void createTask() {
 
         System.out.println("-----------------------------------------------------");
@@ -115,6 +139,8 @@ public class Main {
         System.out.println("-----------------------------------------------------");
         System.out.println("Please, enter de data od the task/reminder you want  ");
         System.out.println("to create");
+
+        lector.nextLine();
 
         System.out.println("TITLE: ");
         String title = lector.nextLine();
@@ -132,7 +158,7 @@ public class Main {
         System.out.println("    OPTION: ");
 
         int priority = lector.nextInt();
-        PriorityLevel levelPriority;
+        PriorityLevel levelPriority = PriorityLevel.HIGH;
 
         while (priority < 1 || priority > 2) {
 
@@ -153,9 +179,10 @@ public class Main {
                 break;
         }
 
+        System.out.println(bohouseSystem.createTask(title, description, date, levelPriority));
 
 
     }
-}
 
+}
 
