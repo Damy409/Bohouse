@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 public class Controller<K, V> {
 
+    int taskCounter = -1;
+
     private HashTable<Integer, String> taskTable;
 
     //private ArrayList<HashNode<K,V>> organizationTable;
@@ -12,7 +14,7 @@ public class Controller<K, V> {
 
     public Controller(){
 
-        taskTable = new HashTable<>(2);
+        taskTable = new HashTable<>(5);
 
     }
 
@@ -21,10 +23,11 @@ public class Controller<K, V> {
 
         Task task = new Task(title, description, date, priorityLevel);
 
-        int priorityValue = (priorityLevel == PriorityLevel.HIGH) ? 0:1;
+        taskCounter = taskCounter+5;
 
-        taskTable.insert(priorityValue, title, null);        //Preguntar que se pasa en el value y como pasar una task en value
+        int taksValue = taskCounter;
 
+        taskTable.insert(taksValue, title, null);        //Preguntar que se pasa en el value y como pasar una task en value
 
         return "The task / reminder " +title+ "has been created ";
     }   
@@ -39,7 +42,7 @@ public class Controller<K, V> {
         StringBuilder result = new StringBuilder("Tasks:\n");
 
         // Itera sobre la HashTable
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 5; i++) {
             String task = taskTable.get(i);
             if(task != null){
                 result.append(task).append("\n");
