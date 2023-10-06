@@ -137,7 +137,7 @@ public class Main {
         System.out.println("-----------------------------------------------------");
         System.out.println("                Create a task/reminder               ");
         System.out.println("-----------------------------------------------------");
-        System.out.println("Please, enter de data od the task/reminder you want  ");
+        System.out.println("Please, enter de data of the task/reminder you want  ");
         System.out.println("to create");
 
         lector.nextLine();
@@ -168,6 +168,8 @@ public class Main {
 
             priority = lector.nextInt();
         }
+
+        //Correcion de errores 
 
         switch(priority)
         {
