@@ -1,10 +1,12 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Controller<K, V> {
 
     private HashTable<Integer, String> taskTable;
+    private PriorityQueue<Task> taskQueuePriority = new PriorityQueue<>();
     int taskCounter = -1;
     private Queue<Task> taskQueue;
 
@@ -16,13 +18,12 @@ public class Controller<K, V> {
 
         taskTable = new HashTable<>(5);
         taskQueue = new Queue<>();
-
-
+        taskQueuePriority = new PriorityQueue<>();
     }
 
-    public String createTask(String title, String description, String date, PriorityLevel priorityLevel) throws Exception{
+    public String createTask(String title, String description, String date, PriorityLevel priorityLevel, int priorityOrder) throws Exception{
 
-        Task task = new Task(title, description, date, priorityLevel);
+        Task task = new Task(title, description, date, priorityLevel, priorityOrder);
 
         int priorityValue = (priorityLevel == PriorityLevel.HIGH) ? 0:1;
 
@@ -34,6 +35,10 @@ public class Controller<K, V> {
 
         if (task.getPriority().equals(PriorityLevel.LOW)) {
             taskQueue.enqueue(task);
+        }
+
+        if (task.getPriority().equals(PriorityLevel.HIGH)) {
+            taskQueuePriority.enqueue(task); // Agrega la tarea a la cola personalizada
         }
 
 
@@ -48,6 +53,8 @@ public class Controller<K, V> {
         System.out.println("");
         System.out.println("QUEUE NON PRIORITY");
         taskQueue.printQueue();
+        System.out.println("QUEUE PRIORITY (HIGH)");
+        taskQueuePriority.printQueue();
         
     }
    

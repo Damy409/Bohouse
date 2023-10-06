@@ -4,12 +4,13 @@ package model;
  * The Task class represents a task with a title, description, date, and priority level.
  * Tasks are used to manage and organize tasks in a to-do list.
  */
-public class Task {
+public class Task implements Comparable<Task>{
 
     private String title; 
     private String description;
     private String date;
     private PriorityLevel priority;
+    private int priorityOrder; 
 
 
     /**
@@ -20,11 +21,12 @@ public class Task {
      * @param date The date associated with the task.
      * @param priority The priority level of the task.
      */
-    public Task(String title, String description, String date, PriorityLevel priority){
+    public Task(String title, String description, String date, PriorityLevel priority, int priorityOrder){
         this.title = title;
         this.description = description;
         this.date = date;
         this.priority = priority;
+        this.priorityOrder = priorityOrder;
 
     }
 
@@ -100,14 +102,29 @@ public class Task {
         this.priority = priority;
     }
 
+    public int getPriorityOrder() {
+        return priorityOrder;
+    }
+
+    public void setPriorityOrder(int priorityOrder) {
+        this.priorityOrder = priorityOrder;
+    }
+
     /**
      * Returns a string representation of the task, including its title, description, date, and priority.
      *
      * @return A string representation of the task.
      */
+
+    @Override
+    public int compareTo(Task otherTask) {
+        // Compara las tareas en función de su priorityOrder
+        return Integer.compare(this.priorityOrder, otherTask.priorityOrder);
+    }
+    
     public String toString(){
 
-        return "Title: " +title+ " Description: " +description+ " Date: " +date+ " Priority: " +priority;
+        return "Title: " +title+ " Description: " +description+ " Date: " +date+ " Priority: " +priority + " Priority Order: " +priorityOrder;
     }    
 
 

@@ -177,17 +177,33 @@ public class Main {
 
         //Correcion de errores 
 
+        int priorityOrder = -1;
+
         switch(priority)
         {
             case 1:
                 levelPriority = PriorityLevel.HIGH;
+
+                System.out.println("In a scale from 1 to 5, which level of priority would you give to this task?");
+                System.out.println("Have in mind the 1 is the Lowest priority and 5 is the Highest priority");
+                System.out.println("PRIORITY: ");
+                priorityOrder = lector.nextInt();
+
+                while(priorityOrder < 1 || priorityOrder > 5)
+                {
+                    System.out.println("Please enter a valid number (between 1 and 5)");
+                    System.out.println("PRIORITY: ");
+                    priorityOrder = lector.nextInt();
+                }
+                lector.nextLine();
                 break;
             case 2:
                 levelPriority = PriorityLevel.LOW;
+                priorityOrder = -1;
                 break;
         }
 
-        System.out.println(bohouseSystem.createTask(title, description, date, levelPriority));
+        System.out.println(bohouseSystem.createTask(title, description, date, levelPriority, priorityOrder));
 
 
     }
