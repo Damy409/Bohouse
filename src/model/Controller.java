@@ -6,6 +6,7 @@ public class Controller<K, V> {
 
     private HashTable<Integer, String> taskTable;
     int taskCounter = -1;
+    private Queue<Task> taskQueue;
 
     //private ArrayList<HashNode<K,V>> organizationTable;
 
@@ -14,6 +15,7 @@ public class Controller<K, V> {
     public Controller(){
 
         taskTable = new HashTable<>(5);
+        taskQueue = new Queue<>();
 
 
     }
@@ -30,6 +32,10 @@ public class Controller<K, V> {
 
         taskTable.put(taskCounter, title);
 
+        if (task.getPriority().equals(PriorityLevel.LOW)) {
+            taskQueue.enqueue(task);
+        }
+
 
         return "The task / reminder " +title+ "has been created ";
     }  
@@ -37,12 +43,12 @@ public class Controller<K, V> {
 
     public void printTasks() {
         
+        System.out.println("HASH TABLE");
         taskTable.printTable();
+        System.out.println("");
+        System.out.println("QUEUE NON PRIORITY");
+        taskQueue.printQueue();
         
     }
    
-    
-    
-
-
 }
