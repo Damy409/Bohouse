@@ -13,141 +13,95 @@ import java.util.Collections;
  */
 public class HashTable<K,V> implements IHashTable<K,V> {
 
-    private ArrayList<HashNode<K,V>> table;
+    private int m;
+    private HashNode<K,V>[] table;
 
-    /**
-     * Constructs a new HashTable with an initial capacity of 12.
-     */
-    public HashTable(int initialSize) {
-        this.table = new ArrayList<>(Collections.nCopies(initialSize, null));
+    //Constructor with parameter
+    public HashTable(int m) {
+        this.m = m;
+        table = new HashNode[m];
     }
 
-    /**
-     * Hashes a task to determine the index in the hash table.
-     *
-     * @param task The task used for generating the hash index.
-     * @return The index in the hash table.
-     */
-    public int hash(K key) {
-
-        /*int key1 = 0;
-
-
-        if (task.getPriority() == PriorityLevel.HIGH)
-        {
-            key1 = 0;
-        }
-        else
-        {
-            key1 = 1;
-        }
-
-        return key1;
-        */
-
-        return key.hashCode() % table.size();
+     public HashTable() {
+        m = 5;
+        table = new HashNode[m];
     }
 
-
-    @Override
-    public void insert(K key, V value, Task task) {
-        if (key == null) {
-            throw new IllegalArgumentException("La clave no puede ser nula.");
-        }
-
-        int index = hash(key);
-        HashNode<K, V> nodeToAdd = new HashNode<>(key, value);
-
-        if (table.get(index) == null) {
-            table.set(index, nodeToAdd);
-        } else {
-            HashNode<K, V> current = table.get(index);
-            nodeToAdd.setNext(current);
-            table.set(index, nodeToAdd);
-        }
+    public int hash(Object key) {
+        return (Math.abs(key.hashCode())) % m;
     }
 
+    
+    public void put(K key, V value) throws Exception 
+    {
+        int insertKey = hash(key);
+    HashNode<K,V> nodeList = table[insertKey];
 
-    @Override
-    public V search(K key, Task task) {
-        int index = hash(key);
-        return search(table.get(index), key, task);
-    }
-
-    private V search(HashNode<K, V> node, K key, Task task) {
-        
-        if (node == null) {
-            return null;
-        }
-        if (node.getKey().equals(key)) {
-            return node.getValue();
-        }
-        return search(key, task);
-    }
-
-    @Override
-    public void delete(K key, Task task) {
-        int index = hash(key);
-        table.set(index, delete(table.get(index), key));
-    }
-
-    // Método privado para eliminar en una lista enlazada de nodos HashNode
-
-    private HashNode<K, V> delete(HashNode<K, V> node, K key) {
-        if (node == null) {
-            return null; // Si no hay nodo en esta posición, no hay nada que eliminar
-        }
-
-        if (node.getKey().equals(key)) {
-            // Si la clave coincide, se elimina este nodo y se devuelve el siguiente
-            return node.getNext();
-        }
-
-        node.setNext(delete(node.getNext(), key)); // Eliminación recursiva en el siguiente nodo de la lista
-        return node;
-    }
-
-    @Override
-    public String print() {
-        return null;
-    }
-
-    // Métodos getter y setter para acceder a la tabla desde fuera de la clase
-
-    /**
-     * Gets the current state of the hash table.
-     *
-     * @return An ArrayList containing the hash table's nodes.
-     */
-    public ArrayList<HashNode<K, V>> getTable() {
-        return table;
-    }
-
-    /**
-     * Sets the hash table to a new ArrayList of HashNodes.
-     *
-     * @param table The new ArrayList to set as the hash table.
-     */
-    public void setTable(ArrayList<HashNode<K, V>> table) {
-        this.table = table;
-    }
-
-    public V get(K key) {
-        int index = hash(key); // Calcular el índice hash para la clave
-
-        // Obtener el nodo en ese índice
-        HashNode<K, V> currentNode = table.get(index);
-
-        // Buscar la clave en la lista de nodos enlazados en ese índice
+    if (nodeList == null) {
+        table[insertKey] = new HashNode<>(key, value);
+    } else {
+        // Busca si la clave ya existe en la lista enlazada
+        HashNode<K, V> currentNode = nodeList;
         while (currentNode != null) {
             if (currentNode.getKey().equals(key)) {
-                return currentNode.getValue(); // Se encontró la clave, devolver el valor asociado
+                // La clave ya existe, actualiza el valor
+                currentNode.setValue(value);
+                return; // Sale del método para evitar la duplicación
             }
-            currentNode = currentNode.getNext(); // Avanzar al siguiente nodo en caso de colisiones
+            currentNode = currentNode.getNext();
         }
 
-        // Si no se encontró la clave en la lista de nodos enlazados
-        return null;
+        // Si llega aquí, la clave no existe en la lista enlazada, agrega un nuevo nodo al final
+        HashNode<K, V> finalNode = new HashNode<>(key, value);
+        HashNode<K, V> lastNode = nodeList;
+        while (lastNode.getNext() != null) {
+            lastNode = lastNode.getNext();
+        }
+        lastNode.setNext(finalNode);
+        finalNode.setPrevious(lastNode);
+        }
+    }
+
+    @Override
+    public V search(K key) {
+        V value = null;
+        int searchKey = hash(key);
+        HashNode<K,V> searchNode = table[searchKey];
+        while (searchNode != null) {
+            if(searchNode.getKey().equals(key)){
+                value = searchNode.getValue();
+            }
+            searchNode = searchNode.getNext();
+        }
+        return value;
+    }
+
+    @Override
+    public void remove(K key) {
+        int deleteKey = hash(key);
+        HashNode<K,V> deleteNode = table[deleteKey];
+        while (deleteNode != null){
+            if(deleteNode.getKey().equals(key)){
+                HashNode<K,V> prev = deleteNode.getPrevious();
+                HashNode<K,V> next = deleteNode.getNext();
+                prev.setNext(next);
+                next.setPrevious(prev);
+            }
+            deleteNode = deleteNode.getNext();
+        }
+    }
+
+    @Override
+    public void printTable() {
+        for (int i = 0; i < m; i++) {
+            HashNode<K, V> current = table[i];
+            System.out.print("Hash " + i + ": ");
+            while (current != null) {
+                System.out.print("[" + current.getKey() + "=" + current.getValue() + "] ");
+                current = current.getNext();
+            }
+            System.out.println(); // Cambia de línea después de imprimir los valores en el mismo hash
+        }
     }
 
 

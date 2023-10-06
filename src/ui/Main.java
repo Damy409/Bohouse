@@ -26,10 +26,9 @@ public class Main {
      * The main method to start the BOHOUSE tasks and reminders system.
      *
      * @param args The command-line arguments (not used in this application).
+     * @throws Exception
      */
-    public static void main(String[] args) {
-
-        
+    public static void main(String[] args) throws Exception {
 
         Main objBohouseSystem = new Main();
 
@@ -40,8 +39,9 @@ public class Main {
 
     /**
      * Displays the main menu and handles user input for various actions.
+     * @throws Exception
      */
-    public void menu() {
+    public void menu() throws Exception {
 
         int option = 0;
 
@@ -77,7 +77,9 @@ public class Main {
             case 1:
                 System.out.println("Caso uno");
                 createTask();
-                System.out.println(bohouseSystem.printTasks());
+                //System.out.println(bohouseSystem.printTasks());
+                bohouseSystem.printTasks();
+    
                 repeatMenu();
                 break;
             case 2:
@@ -100,8 +102,9 @@ public class Main {
     
     /**
      * Displays a submenu and handles user input for continuing or exiting the program.
+     * @throws Exception
      */
-    public void repeatMenu() {
+    public void repeatMenu() throws Exception {
 
         int optionRepeat = 0;
 
@@ -133,13 +136,14 @@ public class Main {
 
     /**
      * Creates a new task/reminder with user-specified data.
+     * @throws Exception
      */
-    public void createTask() {
+    public void createTask() throws Exception {
 
         System.out.println("-----------------------------------------------------");
         System.out.println("                Create a task/reminder               ");
         System.out.println("-----------------------------------------------------");
-        System.out.println("Please, enter de data od the task/reminder you want  ");
+        System.out.println("Please, enter de data of the task/reminder you want  ");
         System.out.println("to create");
 
         lector.nextLine();
@@ -171,6 +175,8 @@ public class Main {
             priority = lector.nextInt();
         }
 
+        //Correcion de errores 
+
         switch(priority)
         {
             case 1:
@@ -187,5 +193,3 @@ public class Main {
     }
 
 }
-
-

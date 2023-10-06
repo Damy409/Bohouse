@@ -10,78 +10,50 @@ package model;
 public class HashNode<K,V> {
 
   
-    private K key;
     private V value;
-    private HashNode<K, V> next;
+    private K key;
 
-    /**
-     * Constructs a new HashNode with the specified key and value.
-     *
-     * @param key   The key associated with the node.
-     * @param value The value associated with the key.
-     */
-    public HashNode(K key, V value){
-        this.key = key;
+    private HashNode<K,V> next;
+    private HashNode<K,V> previous;
+
+    public HashNode(K key, V value) {
         this.value = value;
-        this.next = null;
-
+        this. key = key;
+        next = null;
+        previous = null;
     }
 
-    /**
-     * Sets the key associated with this node.
-     *
-     * @param key The new key to set.
-     */
-    public void setKey(K key) {
-        this.key = key;
-    }
-
-    /**
-     * Sets the value associated with this node.
-     *
-     * @param value The new value to set.
-     */
-    public void setValue(V value) {
-        this.value = value;
-    }
-
-    /**
-     * Sets the next HashNode in the linked list.
-     *
-     * @param current The next HashNode to set.
-     */
-    public void setNext(HashNode<K, V> current) {
-    }
-
-    /**
-     * Gets the key associated with this node.
-     *
-     * @return The key associated with this node.
-     */
-    public Object getKey() {
-        return key;
-    }
-
-    /**
-     * Gets the value associated with this node.
-     *
-     * @return The value associated with this node.
-     */
     public V getValue() {
         return value;
     }
 
-    /**
-     * Gets the next HashNode in the linked list.
-     *
-     * @return The next HashNode in the linked list.
-     */
+    public void setValue(V value) {
+        this.value = value;
+    }
+
+    public K getKey() {
+        return key;
+    }
+
+    public void setKey(K key) {
+        this.key = key;
+    }
+
     public HashNode<K, V> getNext() {
         return next;
     }
 
-    
+    public void setNext(HashNode<K, V> next) {
+        this.next = next;
+    }
 
+    public HashNode<K, V> getPrevious() {
+        return previous;
+    }
+
+    public void setPrevious(HashNode<K, V> previous) {
+        this.previous = previous;
+    }
 
     
 }
