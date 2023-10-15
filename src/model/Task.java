@@ -102,10 +102,23 @@ public class Task implements Comparable<Task>{
         this.priority = priority;
     }
 
+
+    /**
+     * Get the Priority order of the task
+     * 
+     * @return priorityOrder The priority order of th task
+     */
     public int getPriorityOrder() {
         return priorityOrder;
     }
 
+
+
+    /**
+     * Set the priority order of the task
+     * 
+     * @param priorityOrder The priority order of the task
+     */
     public void setPriorityOrder(int priorityOrder) {
         this.priorityOrder = priorityOrder;
     }
@@ -122,10 +135,16 @@ public class Task implements Comparable<Task>{
         return Integer.compare(this.priorityOrder, otherTask.priorityOrder);
     }
     
-    public String toString(){
-
-        return "Title: " +title+ " Description: " +description+ " Date: " +date+ " Priority: " +priority + " Priority Order: " +priorityOrder;
-    }    
+    /**
+     * Returns a string representation of the object, including the title, description, date,
+     * priority, and priority order.
+     *
+     * @return A string containing information about the object, including its title, description,date, priority, and priority order.
+     */
+    public String toString() {
+        return "Title: " + title + " Description: " + description + " Date: " + date +
+            " Priority: " + priority + " Priority Order: " + priorityOrder;
+    } 
 
 
     
