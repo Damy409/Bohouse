@@ -4,17 +4,31 @@ import java.util.Scanner;
 import model.Controller;
 import model.PriorityLevel;
 
+
+/**
+ * The Main class represents the main entry point for the BOHOUSE tasks and reminders system.
+ * It provides a menu for users to perform various actions related to tasks and reminders.
+ */
 public class Main {
 
     private Scanner lector;
     private Controller bohouseSystem;
 
+    /**
+     * Constructs a new Main object, initializing the scanner and the controller for the system.
+     */
     public Main() {
         lector = new Scanner(System.in);
         this.bohouseSystem = new Controller();
     }
 
-    public static void main(String[] args) {
+    /**
+     * The main method to start the BOHOUSE tasks and reminders system.
+     *
+     * @param args The command-line arguments (not used in this application).
+     * @throws Exception
+     */
+    public static void main(String[] args) throws Exception {
 
         Main objBohouseSystem = new Main();
 
@@ -23,7 +37,11 @@ public class Main {
 
     }
 
-    public void menu() {
+    /**
+     * Displays the main menu and handles user input for various actions.
+     * @throws Exception
+     */
+    public void menu() throws Exception {
 
         int option = 0;
 
@@ -58,6 +76,10 @@ public class Main {
         {
             case 1:
                 System.out.println("Caso uno");
+                createTask();
+                //System.out.println(bohouseSystem.printTasks());
+                bohouseSystem.printTasks();
+    
                 repeatMenu();
                 break;
             case 2:
@@ -77,8 +99,12 @@ public class Main {
  
 
     }
-    //Menu repeticion 
-    public void repeatMenu() {
+    
+    /**
+     * Displays a submenu and handles user input for continuing or exiting the program.
+     * @throws Exception
+     */
+    public void repeatMenu() throws Exception {
 
         int optionRepeat = 0;
 
@@ -108,13 +134,19 @@ public class Main {
 
     }
 
-    public void createTask() {
+    /**
+     * Creates a new task/reminder with user-specified data.
+     * @throws Exception
+     */
+    public void createTask() throws Exception {
 
         System.out.println("-----------------------------------------------------");
         System.out.println("                Create a task/reminder               ");
         System.out.println("-----------------------------------------------------");
-        System.out.println("Please, enter de data od the task/reminder you want  ");
+        System.out.println("Please, enter de data of the task/reminder you want  ");
         System.out.println("to create");
+
+        lector.nextLine();
 
         System.out.println("TITLE: ");
         String title = lector.nextLine();
@@ -143,17 +175,35 @@ public class Main {
             priority = lector.nextInt();
         }
 
+        //Correcion de errores 
+
+        int priorityOrder = -1;
+
         switch(priority)
         {
             case 1:
                 levelPriority = PriorityLevel.HIGH;
+
+                System.out.println("In a scale from 1 to 5, which level of priority would you give to this task?");
+                System.out.println("Have in mind the 1 is the Lowest priority and 5 is the Highest priority");
+                System.out.println("PRIORITY: ");
+                priorityOrder = lector.nextInt();
+
+                while(priorityOrder < 1 || priorityOrder > 5)
+                {
+                    System.out.println("Please enter a valid number (between 1 and 5)");
+                    System.out.println("PRIORITY: ");
+                    priorityOrder = lector.nextInt();
+                }
+                lector.nextLine();
                 break;
             case 2:
                 levelPriority = PriorityLevel.LOW;
+                priorityOrder = -1;
                 break;
         }
 
-        System.out.println(bohouseSystem.createTask(title, description, date, levelPriority));
+        System.out.println(bohouseSystem.createTask(title, description, date, levelPriority, priorityOrder));
 
 
     }

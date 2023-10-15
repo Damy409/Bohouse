@@ -1,44 +1,59 @@
 package model;
 
+
+/**
+ * The HashNode class represents a node in a hash table, containing a key-value pair.
+ *
+ * @param <K> The type of the key.
+ * @param <V> The type of the value.
+ */
 public class HashNode<K,V> {
 
   
-    private K key;
     private V value;
-    private HashNode<K, V> next;
+    private K key;
 
-    public HashNode(K key, V value){
-        this.key = key;
+    private HashNode<K,V> next;
+    private HashNode<K,V> previous;
+
+    public HashNode(K key, V value) {
         this.value = value;
-        this.next = null;
-
+        this. key = key;
+        next = null;
+        previous = null;
     }
 
-    public void setKey(K key) {
-        this.key = key;
+    public V getValue() {
+        return value;
     }
 
     public void setValue(V value) {
         this.value = value;
     }
 
-    public void setNext(HashNode<K, V> current) {
+    public K getKey() {
+        return key;
     }
 
-    public Object getKey() {
-        return null;
-    }
-
-    public V getValue() {
-        return null;
+    public void setKey(K key) {
+        this.key = key;
     }
 
     public HashNode<K, V> getNext() {
-        return null;
+        return next;
     }
 
-    
+    public void setNext(HashNode<K, V> next) {
+        this.next = next;
+    }
 
+    public HashNode<K, V> getPrevious() {
+        return previous;
+    }
+
+    public void setPrevious(HashNode<K, V> previous) {
+        this.previous = previous;
+    }
 
     
 }
